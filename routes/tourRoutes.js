@@ -2,7 +2,7 @@ const express = require('express');
 
 const tourRouter = express.Router();
 const tourController = require('./../controllers/tourController');
-
+const authController = require('./../controllers/authController');
 //tourRouter.param('id', tourController.checkID)
 
 tourRouter.route('/best-5').get(tourController.topTours, tourController.getTours);
@@ -10,11 +10,13 @@ tourRouter.route('/tour-stats').get(tourController.getTourStats);
 tourRouter.route('/monthly-plan/:year').get(tourController.getMonthlyPlan);
 
 tourRouter.route('/')
-    .get(tourController.getTours)
-    .post(tourController.createTour);
+    .get(authController.protect, tourController.getTours)
+    .post(authController.protect, tourController.createTour);
 
 tourRouter.route('/:id')
-    .get(tourController.getTour).patch(tourController.updateTour).delete(tourController.deleteTour);
+    .get(authController.protect, authController.restrict('admin', 'lead'), tourController.getTour)
+    .patch(authController.protect, tourController.updateTour)
+    .delete(authController.protect, tourController.deleteTour);
 
 module.exports = tourRouter;
 
