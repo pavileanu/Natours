@@ -1,4 +1,5 @@
 const User = require('./../models/userModel');
+const factory = require('./handleFactory');
 const AppError = require('./../utils/appError');
 const catchAsync = require('./../utils/catchAsync');
 
@@ -11,21 +12,14 @@ const filterObj = (obj, ...allowedFields) => {
     return newObj;
 }
 
-exports.getUsers = catchAsync(async (req, res, next) => {
-    const users = await User.find();
-    
-    res.status(200).json({
-        status: 'Success',
-        results: users.length,
-        data: {            
-            users: users
-        }
-    });
-});
+exports.getMe = (req, res, next) => {
+    console.log('ce naiba');
+    req.params.id = req.user.id;
+    next();
+}
 
-exports.getUser = catchAsync(async (req, res, next) => {
-    
-});
+exports.getUsers = factory.getAll(User);
+exports.getUser = factory.getOne(User);
 
 exports.createUser = catchAsync(async (req, res, next) => {
     

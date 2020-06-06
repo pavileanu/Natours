@@ -39,9 +39,11 @@ console.log(process.env);
 
 const tourRouter = require('./routes/tourRoutes')
 const usersRouter = require('./routes/userRoutes');
+const reviewRouter = require('./routes/reviewRoutes');
 
 app.use('/api/tours', tourRouter);
 app.use('/api/users', usersRouter);
+app.use('/api/reviews', reviewRouter);
 
 app.all('*', (req, res, next) => {
     next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

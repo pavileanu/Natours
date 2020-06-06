@@ -12,7 +12,7 @@ mongoose.connect(DB, {
 }).then(m => console.log(m));
 
 const Tour = require('./../../models/tourModel');
-const tours = JSON.parse(fs.readFileSync(`${__dirname}/tours-simple.json`, 'utf-8'));
+const tours = JSON.parse(fs.readFileSync(`${__dirname}/tours.json`, 'utf-8'));
 
 const seedSimpleTours = async () => {
     try {
